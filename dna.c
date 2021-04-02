@@ -19,24 +19,32 @@ void load_string(FILE *file, int *p, char *s, int t) {
 
 int mlcs_w(char a[], int n, char b[], int m, int length[MAX_SIZE + 1][MAX_SIZE + 1]) {
     if(n == 0 || m == 0){
-        length[n][m] = 0;
+        return 0;
     }else if(a[n-1] == b[m-1]){
-        length[n][m] = length[n-1][m-1];
-    }else if(length[n-1][m] > length[n][m-1]){
-        length[n][m] = length[n-1][m];
-    }else if(length[n][m-1] > length[n-1][m]){
-        length[n][m] = length[n][m-1];
+        return 1 +  mlcs_w(a,n-1,b,m-1,length);
+    }else {
+        int n1 = mlcs_w(a,n-1,b,m,length);
+        int m1 = mlcs_w(a,n,b,m-1,length);
+        if(n1 > m1){
+            return n1;
+        } 
+        return m1;
     }
-    mlcs_w (a,n-1,b,m-1,length);
-    return 0;
 }
-
-
 int mlcs(char a[], int n, char b[], int m) {
-    int length[n][m];
-    printf("Chamando");
-    mlcs_w(a,n,b,m,length);
-    return 1;
+    int length[MAX_SIZE + 1][MAX_SIZE + 1];
+    
+    for (int i = 0; i < m; i++){
+        for (int j = 0; j < n; j++){
+            length[i][j] = a[j]; 
+        }
+    }
+    for (int i2 = 0; i2 < n; i2++){
+        for (int j2 = 0; j2 < m; j2++){
+            length[i2][j2] = b[j2]; 
+        }
+    }
+    return mlcs_w(a,n,b,m,length);
 }
 
 
