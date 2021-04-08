@@ -47,8 +47,6 @@ int mlcs(char a[], int n, char b[], int m) {
     }
     return mlcs_w(a,n,b,m,length);
 }
-
-
 int dlcs(char a[], int n, char b[], int m) {
 
     int length[MAX_SIZE + 1][MAX_SIZE + 1];
